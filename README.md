@@ -141,7 +141,7 @@ After you are done installing packages,
 
 ---
 
-Please feel free to suggest any Improvements.    
+Please feel free to suggest any Features/Improvements.    
 Thank You -Edward
 
 
