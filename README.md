@@ -35,7 +35,7 @@ You can install/update packages/files onto the USB while running from Ram with a
 - [Step 1](https://github.com/RadicalEd360/ArchUSB/blob/main/README.md#step-1) Install Arch linux to a [Removable Medium](https://wiki.archlinux.org/title/Install_Arch_Linux_on_a_removable_medium)
 - [Step 2](https://github.com/RadicalEd360/ArchUSB/blob/main/README.md#step-2) Install and configure Arcmags [Ramroot](https://github.com/arcmags/ramroot/blob/master/ramroot)
 - [Step 3](https://github.com/RadicalEd360/ArchUSB/blob/main/README.md#step-3) Edit [mkinitcpio hooks](https://wiki.archlinux.org/title/mkinitcpio#Common_hooks) to activate USB block devices
-- [Step 4](https://github.com/RadicalEd360/ArchUSB/blob/main/README.md#step-4) Configure the [bootloader](https://wiki.archlinux.org/title/Arch_boot_process#Boot_loader) and [fstab](https://wiki.archlinux.org/title/Fstab) to find and load from USB
+- [Step 4](https://github.com/RadicalEd360/ArchUSB/blob/main/README.md#step-4) Configure the [bootloader](https://wiki.archlinux.org/title/Arch_boot_process#Boot_loader) and [fstab](https://wiki.archlinux.org/title/Fstab) to find and load the USB
 - [Step 5](https://github.com/RadicalEd360/ArchUSB/blob/main/README.md#step-5) Install your desired [services and features](https://wiki.archlinux.org/title/general_recommendations) to Arch linux
 
 ---
@@ -47,33 +47,90 @@ An easy way to install directly to USB is with Virtualbox.
 - Create a VM and use the vmdk as your harddrive.
 - insert Install disk, boot, and continue like normal.  
 
-This step involves a basic install up until you reach the chroot part.
-You will want to LABEL your partitions for versatility.
-Continue Install as Normal until you are done installing the kernel and setting your timezone info.
+This step involves a basic install up until you reach the chroot part.  
+You will want to use ext2 partitions rather than ext4 to avoid taxing the USBs read/writes via fsck. This greatly improves the devices longterm health.  
+You will also want to LABEL your partitions for boot versatility.  
+Continue as Normal until you are done installing the kernel, partitioning, setting your timezone info etc.
 
 Before exiting the chroot, continue to step 2.
 
 ### #2. Install Ramroot
 Ramroot exists in the AUR  
-you do not need to install an AUR helper, although you can if you want  
+you do not need to install an AUR helper, although you can if you want.  
 
-Just install git and use makepkg instead  
-makepkg requires a lesser priviledged user to run, and later uses sudo to install 
-we can use the git user to do this without needing to create a new user
+Just install git and use makepkg instead of an AUR helper.  
+makepkg requires a lesser priviledged user to start building, and then later uses sudo to install the finished package.  
+We can use the git user to do this without needing to create a new user by giving it sudo access with visudo.  
 
 ```
-visudo            # give sudoer access to git user
-sudo -u git bash  # open a shell as git user
+visudo            # give nopasswd access to git user - git ALL=(ALL:ALL) NOPASSWD: ALL
+sudo -u git bash  # open a shell as the git user
 
-git clone $aururl # download AUR packages
-cd $aurpkg        # specifically ramroot
+git clone $aururl # download any AUR packages
+cd $aurpkg        # We specifically are installing ramroot
 makepkg -si       # repeat these steps
 cd ..             # for each AUR package
 
-exit              # return to root chroot
-visudo            # undo sudoer access
+exit              # return to root chroot for further configuration
+visudo            # undo sudoer access for git user.
 ```
 
-After installing ramroot, we can configure it by editing **/etc/ramroot.conf**  
-After any configuration, you must always activate your new settings with `ramroot -E`
+After installing ramroot, we can configure it to our liking by editing **/etc/ramroot.conf**  
+the default configuration is fine, however you may want to set the ps_timeout and ps_default variables.  
+I have set the ps_timeout to 1 and the ps_default to yes in order to ensure my USB copies into ram quickly (if able) without any user intervention.
 
+After any changing any configuration, you must always activate your new settings with `ramroot -E`
+
+
+### #3. Configure mkinitcpio.conf
+at this moment if we rebooted, the ramdisk would never find our USB partitions  
+this is because the system is configured to power on **block** devices after trying to find the root partition through sata.  
+
+to fix this problem we must edit /etc/mkinitcpio.conf and rearrange the order of events known as *hooks*  
+move the **block hook** closer to the beginning just after base. the following setup works for me.  
+`HOOKS=(base block udev ramroot autodetect modconf filesystems keyboard fsck)`
+
+after doing this we will need to regenerate the initramfs by issuing either `ramroot -E` or `mkinitcpio -P`  
+the system will now check connected usb devices for the root partition at boot.
+
+### #4. configure a bootloader
+We have chosen grub as our bootloader.  
+your chosen bootloader may be different, please reffer to their documentation.  
+basically the goal here is to make sure they find the right device to boot from.  
+
+this is the point where labeling your partition has the advantage over UUIDs  
+USB devices give out faster than SSDs and as such we will likely install multiple USBs  
+a dedicated UUID will eventually require a reconfiguration so we do it now instead.  
+
+we first edit /etc/fstab and point / to our label like so:  
+`LABEL=ArchUSB          /               ext4            rw,relatime     0 1`  
+ramroot comments out this line and sets / to the zram while booting, it is good to have this in case we don't want to run from RAM.  
+
+then we edit /etc/default/grub and change settings to our liking such as the timeout.  
+```
+GRUB_DEFAULT=0
+GRUB_TIMEOUT=1
+export GRUB_DISABLE_UUID=true
+export GRUB_DEVICE="LABEL=ArchUSB"
+```
+the last two lines are the most important and are self explanatory.  
+we tell grub to look for a specific LABEL instead of searching for UUIDs.  
+
+we have one last step of configuring before we can properly boot with grub on a USB.  
+we must first generate the grub.cfg then edit that file as I could not find a way to do this properly within /etc/default/grub  
+I know its not ideal to edit /boot/grub/grub.cfg as its not very dynamic, I repeat, I did not find a way to do this within /etc/default/grub  
+If you know how to override grubs heuristics algorithm and set a custom root, please share. Thank you.  
+
+Generate the grub.cfg by issuing `grub-mkconfig -o /boot/grub/grub.cfg`  
+then edit the file and change all lines that look like `set root='hdX,msdos1'` to `hd0`  
+when booting from a USB, the device will always be located at **hd0**, so we must tell it to look there or it will not boot.
+
+### #5. Finishing Up
+Congratulations, you may continue the normal Arch install process by installing your desired features and what not.  
+I installed some utilities i like such as tmux, ranger, wifi firmware, networkmanager, openssh and so on.  
+I then configured networkmanager to auto connect to wifi and openssh to autostart as a service.  
+I was happy with it being headless and did not install a desktop environment, your purposes may be different than mine.  
+You may want to install a desktop environment.  
+
+Keep in mind that any package you install adds space to the disk and will take more time to copy into ram.
+After you are done installing packages, I highly reccomend you clear pacmans cache with `pacman -Scc` to cut down on disk space.
