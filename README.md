@@ -17,7 +17,7 @@ Feel free to suggest any features/improvements!
 
 ---
 
-## Image Notes
+## Disk Image Notes
 - The Compressed Image is just under 1G, and requires almost 3G of USB space.
 - To run this from ram, you should have atleast 4G total RAM.
 - Github requires a project called **git-lfs** to download/upload files larger than 100M. (basically stores them somewhere else.)
