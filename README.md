@@ -128,7 +128,7 @@ then edit the file and **change all lines that look like** `set root='hdX,msdos1
 when booting from a USB, the device is **always located at hd0**, so we must tell it to look there or it will not boot.
 
 ### 5. Finishing Up
-**Congratulations, you may continue the normal Arch install process** by installing your desired features and what not.  
+**Congratulations, you may continue the normal Arch install process** by installing your desired features!  
 I installed some utilities i like such as tmux, ranger, wifi firmware, networkmanager, openssh and so on.  
 I then configured networkmanager to auto connect to wifi and openssh to autostart as a service.  
 I was happy with it being headless and did not install a desktop environment, your purposes may be different than mine.  
@@ -138,3 +138,10 @@ Keep in mind that any package you install **adds space to the disk and will take
 
 After you are done installing packages,  
 **I highly reccomend you clear pacmans cache** with `pacman -Scc`.
+
+---
+
+Please feel free to suggest any Improvements. Thank You - Edward
+
+
+![alt text](https://images.pexels.com/photos/220357/pexels-photo-220357.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1 "Image Credit: Hitarth Jadhav on pexels.com")
