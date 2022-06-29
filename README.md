@@ -132,5 +132,7 @@ I then configured networkmanager to auto connect to wifi and openssh to autostar
 I was happy with it being headless and did not install a desktop environment, your purposes may be different than mine.  
 **You may want to install a desktop environment**.  
 
-Keep in mind that any package you install **adds space to the disk and will take more time to copy into ram**.
-After you are done installing packages, **I highly reccomend you clear pacmans cache** with `pacman -Scc` to cut down on disk space.
+Keep in mind that any package you install **adds space to the disk and will take more time to copy into ram**.    
+
+After you are done installing packages,  
+**I highly reccomend you clear pacmans cache** with `pacman -Scc`.
