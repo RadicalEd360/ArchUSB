@@ -40,7 +40,7 @@ You can install/update packages/files onto the USB while running from Ram with a
 
 ---
 
-###1-Install Arch to a Removable Medium
+### #1. Install Arch to a Removable Medium
 There are many ways to install Arch Linux.  
 An easy way to install directly to USB is with Virtualbox.
 - create a raw vmdk that points to the USB Drive.  
@@ -53,19 +53,26 @@ Continue Install as Normal until you are done installing the kernel and setting 
 
 Before exiting the chroot, continue to step 2.
 
-###2-Install Ramroot
+### #2. Install Ramroot
 Ramroot exists in the AUR  
-you do not need to install an AUR helper, you can if you want  
+you do not need to install an AUR helper, although you can if you want  
 
-just install git and use makepkg instead  
-makepkg requires a lesser priviledged user to run and internally uses sudo pacman to install 
-installing git just happens to create the git user that we can use to do this.
+Just install git and use makepkg instead  
+makepkg requires a lesser priviledged user to run, and later uses sudo to install 
+we can use the git user to do this without needing to create a new user
 
 ```
 visudo            # give sudoer access to git user
-sudo -u git bash  # open shell as git user
-makepkg -si       # repeat for each of your AUR packages
-exit              # return to chroot
+sudo -u git bash  # open a shell as git user
+
+git clone $aururl # download AUR packages
+cd $aurpkg        # specifically ramroot
+makepkg -si       # repeat these steps
+cd ..             # for each AUR package
+
+exit              # return to root chroot
 visudo            # undo sudoer access
 ```
 
+We can now configure ramroot by editing **/etc/ramroot.conf**
+after configuring you must activate your new settings with `ramroot -E`
