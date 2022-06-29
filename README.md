@@ -141,7 +141,8 @@ After you are done installing packages,
 
 ---
 
-Please feel free to suggest any Improvements. Thank You - Edward
+Please feel free to suggest any Improvements.    
+Thank You -Edward
 
 
 ![alt text](https://images.pexels.com/photos/220357/pexels-photo-220357.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1 "Image Credit: Hitarth Jadhav on pexels.com")
