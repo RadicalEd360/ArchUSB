@@ -117,20 +117,20 @@ the last two lines are the most important and are self explanatory.
 we tell grub to look for a specific LABEL instead of searching for UUIDs.  
 
 we have one last step of configuring before we can properly boot with grub on a USB.  
-we must first generate the grub.cfg then edit that file as I could not find a way to do this properly within /etc/default/grub  
-I know its not ideal to edit /boot/grub/grub.cfg as its not very dynamic, I repeat, I did not find a way to do this within /etc/default/grub  
+we must first **generate the grub.cfg then edit that file** as I could not find a way to do this properly within /etc/default/grub  
+I know its not ideal to edit grub.cfg as its not very dynamic, However I repeat, I did not find a way to do this within /etc/default/grub  
 If you know how to override grubs heuristics algorithm and set a custom root, please share. Thank you.  
 
-Generate the grub.cfg by issuing `grub-mkconfig -o /boot/grub/grub.cfg`  
-then edit the file and change all lines that look like `set root='hdX,msdos1'` to `hd0`  
-when booting from a USB, the device will always be located at **hd0**, so we must tell it to look there or it will not boot.
+**Generate the grub.cfg** by issuing `grub-mkconfig -o /boot/grub/grub.cfg`  
+then edit the file and **change all lines that look like** `set root='hdX,msdos1'` to `hd0`  
+when booting from a USB, the device is **always located at hd0**, so we must tell it to look there or it will not boot.
 
 ### #5. Finishing Up
-Congratulations, you may continue the normal Arch install process by installing your desired features and what not.  
+**Congratulations, you may continue the normal Arch install process** by installing your desired features and what not.  
 I installed some utilities i like such as tmux, ranger, wifi firmware, networkmanager, openssh and so on.  
 I then configured networkmanager to auto connect to wifi and openssh to autostart as a service.  
 I was happy with it being headless and did not install a desktop environment, your purposes may be different than mine.  
-You may want to install a desktop environment.  
+**You may want to install a desktop environment**.  
 
-Keep in mind that any package you install adds space to the disk and will take more time to copy into ram.
-After you are done installing packages, I highly reccomend you clear pacmans cache with `pacman -Scc` to cut down on disk space.
+Keep in mind that any package you install **adds space to the disk and will take more time to copy into ram**.
+After you are done installing packages, **I highly reccomend you clear pacmans cache** with `pacman -Scc` to cut down on disk space.
