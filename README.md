@@ -18,9 +18,11 @@ Feel free to suggest any features/improvements!
 ---
 
 ## Image Notes
-- Github requires a project called git-lfs for files larger than 100M
+- The Compressed Image is just under 1G, and requires almost 3G of USB space.
+- To run this from ram, you should have atleast 4G total RAM.
+- Github requires a project called **git-lfs** to download/upload files larger than 100M. (basically stores them somewhere else.)
 - The default logins are **root:toor** **mars:atlantis**
-- Image can be directly written by piping gunzip into dd.
+- Image can be directly written by piping gunzip into dd `gunzip -k file.img.gz | sudo dd of=/dev/sXX bs=512M status=progress`.
 - Partition table is built for Legacy Booting
 - Filesystem is ext4 with journaling disabled
 - Kernel is linux-lts with headers and firmware  
