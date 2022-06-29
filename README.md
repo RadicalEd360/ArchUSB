@@ -144,7 +144,8 @@ I was happy with it being headless and did not install a desktop environment, yo
 Keep in mind that any package you install **adds space to the disk and will take more time to copy into ram**.    
 
 After you are done installing packages,  
-**I highly reccomend you clear pacmans cache** with `pacman -Scc`.
+**I highly reccomend you clear pacmans cache** with `pacman -Scc`.  
+this will free up a large amount of data.
 
 ---
 
