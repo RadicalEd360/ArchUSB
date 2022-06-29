@@ -56,6 +56,8 @@ Continue as Normal until you are done installing the kernel, partitioning, setti
 
 Before exiting the chroot, continue to step 2.
 
+---
+
 ### 2. Install Ramroot
 Ramroot exists in the AUR  
 you do not need to install an AUR helper, although you can if you want.  
@@ -83,6 +85,7 @@ I have set the ps_timeout to 1 and the ps_default to yes in order to ensure my U
 
 After any changing any configuration, you must always activate your new settings with `ramroot -E`
 
+---
 
 ### 3. Configure mkinitcpio.conf
 at this moment if we rebooted, the ramdisk would never find our USB partitions  
@@ -94,6 +97,8 @@ move the **block hook** closer to the beginning just after base. the following s
 
 after doing this we will need to regenerate the initramfs by issuing either `ramroot -E` or `mkinitcpio -P`  
 the system will now check connected usb devices for the root partition at boot.
+
+---
 
 ### 4. configure a bootloader
 We have chosen grub as our bootloader.  
@@ -126,6 +131,8 @@ If you know how to override grubs heuristics algorithm and set a custom root, pl
 **Generate the grub.cfg** by issuing `grub-mkconfig -o /boot/grub/grub.cfg`  
 then edit the file and **change all lines that look like** `set root='hdX,msdos1'` to `hd0`  
 when booting from a USB, the device is **always located at hd0**, so we must tell it to look there or it will not boot.
+
+---
 
 ### 5. Finishing Up
 **Congratulations, you may continue the normal Arch install process** by installing your desired features!  
