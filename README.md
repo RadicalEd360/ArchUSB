@@ -74,5 +74,6 @@ exit              # return to root chroot
 visudo            # undo sudoer access
 ```
 
-We can now configure ramroot by editing **/etc/ramroot.conf**
-after configuring you must activate your new settings with `ramroot -E`
+After installing ramroot, we can configure it by editing **/etc/ramroot.conf**  
+After any configuration, you must always activate your new settings with `ramroot -E`
+
