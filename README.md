@@ -34,11 +34,11 @@ You can install/update packages/files onto the USB while running from Ram with a
 ---
 
 # How to Create this project from Scratch
-- [Step 1](https://github.com/RadicalEd360/ArchUSB/blob/main/README.md#1-install-arch-to-a-removable-medium) Install Arch linux to a [Removable Medium](https://wiki.archlinux.org/title/Install_Arch_Linux_on_a_removable_medium)
-- [Step 2](https://github.com/RadicalEd360/ArchUSB/blob/main/README.md#2-install-ramroot) Install and configure Arcmags [Ramroot](https://github.com/arcmags/ramroot/blob/master/ramroot)
-- [Step 3](https://github.com/RadicalEd360/ArchUSB/blob/main/README.md#3-configure-mkinitcpioconf) Edit [mkinitcpio hooks](https://wiki.archlinux.org/title/mkinitcpio#Common_hooks) to activate USB block devices
-- [Step 4](https://github.com/RadicalEd360/ArchUSB/blob/main/README.md#4-configure-a-bootloader) Configure the [bootloader](https://wiki.archlinux.org/title/Arch_boot_process#Boot_loader) and [fstab](https://wiki.archlinux.org/title/Fstab) to find and load the USB
-- [Step 5](https://github.com/RadicalEd360/ArchUSB/blob/main/README.md#5-finishing-up) Install your desired [services and features](https://wiki.archlinux.org/title/general_recommendations) to Arch linux
+- [Step 1](https://github.com/RadicalEd360/ArchUSB#1-install-arch-to-a-removable-medium) Install Arch linux to a [Removable Medium](https://wiki.archlinux.org/title/Install_Arch_Linux_on_a_removable_medium)
+- [Step 2](https://github.com/RadicalEd360/ArchUSB#2-install-ramroot) Install and configure Arcmags [Ramroot](https://github.com/arcmags/ramroot/blob/master/ramroot)
+- [Step 3](https://github.com/RadicalEd360/ArchUSB#3-configure-mkinitcpioconf) Edit [mkinitcpio hooks](https://wiki.archlinux.org/title/mkinitcpio#Common_hooks) to activate USB block devices
+- [Step 4](https://github.com/RadicalEd360/ArchUSB#4-configure-a-bootloader) Configure the [bootloader](https://wiki.archlinux.org/title/Arch_boot_process#Boot_loader) and [fstab](https://wiki.archlinux.org/title/Fstab) to find and load the USB
+- [Step 5](https://github.com/RadicalEd360/ArchUSB#5-finishing-up) Install your desired [services and features](https://wiki.archlinux.org/title/general_recommendations) to Arch linux
 
 ---
 
