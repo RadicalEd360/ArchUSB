@@ -42,7 +42,7 @@ You can install/update packages/files onto the USB while running from Ram with a
 
 ---
 
-### #1. Install Arch to a Removable Medium
+### 1. Install Arch to a Removable Medium
 There are many ways to install Arch Linux.  
 An easy way to install directly to USB is with Virtualbox.
 - create a raw vmdk that points to the USB Drive.  
@@ -56,7 +56,7 @@ Continue as Normal until you are done installing the kernel, partitioning, setti
 
 Before exiting the chroot, continue to step 2.
 
-### #2. Install Ramroot
+### 2. Install Ramroot
 Ramroot exists in the AUR  
 you do not need to install an AUR helper, although you can if you want.  
 
@@ -84,7 +84,7 @@ I have set the ps_timeout to 1 and the ps_default to yes in order to ensure my U
 After any changing any configuration, you must always activate your new settings with `ramroot -E`
 
 
-### #3. Configure mkinitcpio.conf
+### 3. Configure mkinitcpio.conf
 at this moment if we rebooted, the ramdisk would never find our USB partitions  
 this is because the system is configured to power on **block** devices after trying to find the root partition through sata.  
 
@@ -95,7 +95,7 @@ move the **block hook** closer to the beginning just after base. the following s
 after doing this we will need to regenerate the initramfs by issuing either `ramroot -E` or `mkinitcpio -P`  
 the system will now check connected usb devices for the root partition at boot.
 
-### #4. configure a bootloader
+### 4. configure a bootloader
 We have chosen grub as our bootloader.  
 your chosen bootloader may be different, please reffer to their documentation.  
 basically the goal here is to make sure they find the right device to boot from.  
@@ -127,7 +127,7 @@ If you know how to override grubs heuristics algorithm and set a custom root, pl
 then edit the file and **change all lines that look like** `set root='hdX,msdos1'` to `hd0`  
 when booting from a USB, the device is **always located at hd0**, so we must tell it to look there or it will not boot.
 
-### #5. Finishing Up
+### 5. Finishing Up
 **Congratulations, you may continue the normal Arch install process** by installing your desired features and what not.  
 I installed some utilities i like such as tmux, ranger, wifi firmware, networkmanager, openssh and so on.  
 I then configured networkmanager to auto connect to wifi and openssh to autostart as a service.  
