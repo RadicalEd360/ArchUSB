@@ -129,7 +129,7 @@ I know its not ideal to edit grub.cfg as its not very dynamic, However I repeat,
 If you know how to override grubs heuristics algorithm and set a custom root, please share. Thank you.  
 
 **Generate the grub.cfg** by issuing `grub-mkconfig -o /boot/grub/grub.cfg`  
-then edit the file and **change all lines that look like** `set root='hdX,msdos1'` to `hd0`  
+then edit the file and **change all lines that look like** `set root='hdX,msdos1'` to `set root='hd0,msdos1'`  
 when booting from a USB, the device is **always located at hd0**, so we must tell it to look there or it will not boot.
 
 ---
